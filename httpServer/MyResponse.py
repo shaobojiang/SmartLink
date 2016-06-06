@@ -2,6 +2,10 @@
 
 @author: PeterPKU
 '''
+
+from django.http.response import HttpResponse
+import simplejson
+
 def getSucessResponse():
     response = {}
     response['status']=200
@@ -22,3 +26,9 @@ def getErrorResponse(code):
         
     return response
      
+def JSONResponse(result):
+    return HttpResponse(simplejson.dumps(result),content_type="application/json")
+
+
+def JSONError(code):
+    return HttpResponse(simplejson.dumps(getErrorResponse(code)),content_type="application/json")

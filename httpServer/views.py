@@ -3,7 +3,7 @@ from httpServer.models import User
 from django.http.response import HttpResponse
 import json
 import simplejson
-from httpServer.MyResponse import getErrorResponse,getSucessResponse
+from httpServer.MyResponse import getErrorResponse,getSucessResponse,JSONResponse,JSONError
 
 
 # Create your views here.
@@ -17,11 +17,11 @@ def register(request):
     password = struct['password']
 
     if len(user_name)==0 or  len(password)==0:
-        return HttpResponse(simplejson.dumps(getErrorResponse(101)),content_type="application/json")
+        return JSONError(101)
   
     user = User.objects.filter(username=user_name)  
     if user:
-        return HttpResponse(simplejson.dumps(getErrorResponse(102)),content_type="application/json")     
+        return JSONError(102)     
     
     user = User()
     user.username =user_name
@@ -31,7 +31,7 @@ def register(request):
     result = getSucessResponse()
     result['username']=user_name
     result['password']=password
-    return HttpResponse(simplejson.dumps(result),content_type="application/json")
+    return JSONResponse(result)
 
 
 def login(request):
@@ -43,16 +43,16 @@ def login(request):
     pass_word = struct['password']
 
     if len(user_name)==0 or  len(pass_word)==0:
-        return HttpResponse(simplejson.dumps(getErrorResponse(101)),content_type="application/json")
+        return JSONError(101)
   
     user = User.objects.filter(username=user_name,password=pass_word)  
     if not user:
-        return HttpResponse(simplejson.dumps(getErrorResponse(101)),content_type="application/json")     
+        return JSONError(101)     
     
     result = getSucessResponse()
     result['username']=user_name
     result['password']=pass_word
-    return HttpResponse(simplejson.dumps(result),content_type="application/json")
+    return JSONResponse(result)
 
 
 def users(request):
@@ -60,7 +60,7 @@ def users(request):
     userdict = [ob.toDict() for ob in users]
     result = getSucessResponse()
     result['data'] = userdict
-    return HttpResponse(simplejson.dumps(result),content_type="application/json")
+    return JSONResponse(result)
 
     
     
