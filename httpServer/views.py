@@ -4,7 +4,7 @@ from django.http.response import HttpResponse
 import json
 import simplejson
 from httpServer.MyResponse import getErrorResponse,getSucessResponse,JSONResponse,JSONError
-
+from MySocketServer.socketServerInit import socketInit
 
 # Create your views here.
 
@@ -12,7 +12,7 @@ def register(request):
     struct = {}
     if request.method =='POST':
         struct = simplejson.loads(request.body)
-        #req = simplejson.loads(request.body,encoding='utf-8')
+
     user_name =struct['username']
     password = struct['password']
 
@@ -33,7 +33,7 @@ def register(request):
     result['password']=password
     return JSONResponse(result)
 
-
+  
 def login(request):
     struct = {}
     if request.method =='POST':
@@ -54,8 +54,11 @@ def login(request):
     result['password']=pass_word
     return JSONResponse(result)
 
+from SocketServer import TCPServer
+from MySocketServer import MyBaseRequestHandler
 
 def users(request):
+    socketInit()
     users=User.objects.all()
     userdict = [ob.toDict() for ob in users]
     result = getSucessResponse()
