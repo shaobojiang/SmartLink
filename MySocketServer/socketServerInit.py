@@ -8,19 +8,24 @@ from SocketServer import TCPServer, BaseRequestHandler
 import traceback
 from multiprocessing import Process, Queue 
 
-def socketInit():
+ip_port = ('127.0.0.1',9999)
+    
+def socketInit():    
     print "Run socketInit"
     p = Process(target=socketServerRun)
     p.start()
+        
 
 
 
 def socketServerRun():
-    print "Run socket"
-   
-    ip_port = ('127.0.0.1',9999)
-    server = SocketServer.ThreadingTCPServer(ip_port,MyBaseRequestHandler)
-    server.serve_forever()
+    print "Run socket" 
+    try:
+        server = SocketServer.ThreadingTCPServer(ip_port,MyBaseRequestHandler)
+        server.serve_forever()
+    except Exception,ex:
+        print Exception,":", ex
+        return
 
 
 

@@ -4,7 +4,6 @@ from django.http.response import HttpResponse
 import json
 import simplejson
 from httpServer.MyResponse import getErrorResponse,getSucessResponse,JSONResponse,JSONError
-from MySocketServer.socketServerInit import socketInit
 
 # Create your views here.
 
@@ -58,7 +57,6 @@ from SocketServer import TCPServer
 from MySocketServer import MyBaseRequestHandler
 
 def users(request):
-    socketInit()
     users=User.objects.all()
     userdict = [ob.toDict() for ob in users]
     result = getSucessResponse()
