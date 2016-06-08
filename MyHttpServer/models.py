@@ -17,5 +17,22 @@ class User(models.Model):
                     username=self.username,
                     password=self.password)
         
+        
+        
+        
+class CMMessage(models.Model):
+    message = models.CharField(max_length=100)
+    code = models.CharField(max_length=100,default="")
+    
+    def __unicode__(self):
+        return self.message;
+    
+    
+    def toDict(self):
+        return dict(
+                    id=self.id,
+                    message=self.message,
+                    code=self.code)
+        
 
      

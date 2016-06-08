@@ -1,8 +1,8 @@
 #!/usr/bin/env python
 import os
 import sys
-from MySocketServer.socketServerInit import socketInit
-from httpServer.gl import isSocketRunning
+from MyHttpServer.socketServerInit import socketInit
+from MyHttpServer.gl import isSocketRunning
 
 
 if __name__ == "__main__":  

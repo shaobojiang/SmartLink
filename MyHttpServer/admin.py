@@ -1,5 +1,5 @@
 from django.contrib import admin
-from httpServer.models import User
+from MyHttpServer.models import User
 
 # Register your models here.
 

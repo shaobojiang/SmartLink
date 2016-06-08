@@ -1,9 +1,9 @@
 from django.shortcuts import render
-from httpServer.models import User
+from MyHttpServer.models import User,CMMessage
 from django.http.response import HttpResponse
 import json
 import simplejson
-from httpServer.MyResponse import getErrorResponse,getSucessResponse,JSONResponse,JSONError
+from MyHttpServer.MyResponse import getErrorResponse,getSucessResponse,JSONResponse,JSONError
 
 # Create your views here.
 
@@ -47,20 +47,37 @@ def login(request):
     user = User.objects.filter(username=user_name,password=pass_word)  
     if not user:
         return JSONError(101)     
-    
+
     result = getSucessResponse()
     result['username']=user_name
     result['password']=pass_word
     return JSONResponse(result)
 
-from SocketServer import TCPServer
-from MySocketServer import MyBaseRequestHandler
 
 def users(request):
     users=User.objects.all()
     userdict = [ob.toDict() for ob in users]
     result = getSucessResponse()
     result['data'] = userdict
+    return JSONResponse(result)
+
+
+def sendMessage(request):
+    struct = {}
+    if request.method =='POST':
+        struct = simplejson.loads(request.body)
+
+    message =struct['message']
+    code = struct['code']
+    if len(message)==0:
+        return JSONError(101)
+    ob = CMMessage()
+    ob.message = message
+    ob.code=code
+    ob.save()
+   # sendSocketMessage(message)
+    
+    result = getSucessResponse()
     return JSONResponse(result)
 
     

@@ -1,6 +1,6 @@
 from django.conf.urls import patterns, include, url
 from django.contrib import admin
-from httpServer import views
+from MyHttpServer import views
 
 urlpatterns = patterns('',
     # Examples:
@@ -11,5 +11,6 @@ urlpatterns = patterns('',
     url(r'^register/$', views.register, name='register'),
     url(r'^users/$', views.users, name='users'),
     url(r'^login/$', views.login, name='login'),
+    url(r'^send_message/$', views.sendMessage, name='sendMessage'),
     
 )
