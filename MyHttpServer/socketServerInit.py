@@ -28,6 +28,7 @@ def socketInit():
 
 
 def socketServerRun():
+    global server
     print "Run socket" 
     try:
         server = SocketServer.ThreadingTCPServer(ip_port,MyBaseRequestHandler)
@@ -87,9 +88,10 @@ class MyBaseRequestHandler(BaseRequestHandler):
             try:
 
                 data = self.request.recv(1024).strip()
-               
+                if(len(data)==0):
+                   return
                 print "receive from (%r):%r" % (self.client_address, data)    
-                            
+                        
                 sockedrequest = self.request
                 newThread = MessageSendHandler(sockedrequest,self.client_address)
                 newThread.daemon = True
