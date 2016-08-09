@@ -2,6 +2,8 @@
 
 @author: peter.jiang
 '''
+import os
+os.environ.setdefault("DJANGO_SETTINGS_MODULE", "SmartLink.settings")
 import django
 django.setup()
 import SocketServer
@@ -68,7 +70,7 @@ class MessageSendHandler(Thread):
                 
                 if message:
                     print  "message ="+message.message
-                    self.socket.sendall(message.message)
+                    self.socket.sendall(message.message +" echo")
                     message.delete()
             except Exception,ex:
                 pass
